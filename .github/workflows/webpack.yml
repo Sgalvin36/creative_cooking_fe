@@ -31,5 +31,3 @@ jobs:
     # - name: Run Tests
     #   run: npm test
 
-    - name: Export Static Files (Optional)
-      run: npm run export
