@@ -1,9 +1,9 @@
 import React from 'react'
 import UserProfile from './page'
 
-describe('<UserProfile />', () => {
+describe('UserProfile', () => {
   it('renders', () => {
-    // see: https://on.cypress.io/mounting-react
-    cy.mount(<UserProfile />)
-  })
-})
+    const params = Promise.resolve({ id: "123" }); // Mocked params
+    cy.mount(<UserProfile params={params} />);
+  });
+});
