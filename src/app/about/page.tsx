@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function About() {
     return (
@@ -5,7 +6,7 @@ export default function About() {
             <h1>About Me</h1>
             <p>This is about page</p>
             <footer>
-                <a href="/" rel="prev">Back</a>
+                <Link href="/" rel="prev">Back</Link>
             </footer>
         </div>
     )

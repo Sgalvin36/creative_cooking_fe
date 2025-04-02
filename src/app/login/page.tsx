@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default function Login() {
     return (
@@ -5,7 +6,7 @@ export default function Login() {
             <h1>Login Page</h1>
             <p>This is my login page</p>
             <footer>
-                <a href="/" rel="prev">Back</a>
+                <Link href="/" rel="prev">Back</Link>
             </footer>
         </div>
     )

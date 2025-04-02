@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export default async function UserProfile({
     params,
@@ -9,7 +10,7 @@ export default async function UserProfile({
         <div>
             <h1>User Profile: {id}</h1>
             <footer>
-                <a href="/" rel="prev">Back</a>
+                <Link href="/" rel="prev">Back</Link>
             </footer>
         </div>
     )
