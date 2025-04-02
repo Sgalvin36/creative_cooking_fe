@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "cypress:open": "cypress open"
   },
   "dependencies": {
-    "next": "15.1.5",
+    "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -19,6 +19,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cypress": "^14.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.5",
     "postcss": "^8",
