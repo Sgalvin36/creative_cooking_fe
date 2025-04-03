@@ -1,4 +1,5 @@
 import  AuthButtons from './AuthButtons';
+import { User } from 'react-feather';
 import Link from 'next/link'
 
 export default function Header() {
@@ -13,6 +14,9 @@ export default function Header() {
                 <a href="/recipes">Recipes</a>
                 <a href="/about">About</a>
                 <a href="/contact">Contact</a>
+                <Link href="/profile">
+                    <User size={32} strokeWidth={1} color="blue"/>
+                </Link>
             </nav>
         </header>
     );
