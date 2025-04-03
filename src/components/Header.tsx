@@ -15,7 +15,7 @@ export default function Header() {
                 <a href="/about">About</a>
                 <a href="/contact">Contact</a>
                 <Link href="/profile">
-                    <User size={32} strokeWidth={1} color="blue"/>
+                    <User size={32} strokeWidth={2} color="lightBlue"/>
                 </Link>
             </nav>
         </header>
