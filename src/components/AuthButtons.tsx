@@ -1,33 +1,22 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from './ui/Button';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
 
 export default function AuthButtons() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-        const router = useRouter();
+    const router = useRouter();
+    const { isLoggedIn, logIn, logOut } = useAuth();
     
-        const handleLogin = () => {
-            setIsLoggedIn(true);
-            router.push('/');
-        };
-    
-        const handleLogout = () => {
-            setIsLoggedIn(false);
-            router.push('/');
-        };
-
-        const redirect = () => {
-            router.push('/register')
-        };
-
+    const redirect = () => {
+        router.push('/register')
+    }
     return (
         <div className="flex gap-4">
             {isLoggedIn ? (
-                <Button onClick={handleLogout} variant="outline">Logout</Button>
+                <Button onClick={logOut} variant="outline">Logout</Button>
                 ) : (
-                <Button onClick={handleLogin} variant="default">Login</Button>
+                <Button onClick={logIn} variant="default">Login</Button>
             )}
             {isLoggedIn ? 
                 null : (
