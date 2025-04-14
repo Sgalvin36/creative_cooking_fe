@@ -2,33 +2,23 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext'; // adjust to your actual path
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   const { isLoggedIn, user } = useAuth();
+  const router = useRouter();
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (isLoggedIn && user) {
+      router.push(`/${user.id}/cookbook`);
+    } else {
       fetch('/api/random_recipes') // or your actual backend endpoint
         .then((res) => res.json())
         .then((data) => setRecipes(data))
         .catch((err) => console.error('Error fetching recipes', err));
     }
-  }, [isLoggedIn]);
-
-  if (isLoggedIn) {
-    return (
-      <main className="p-6">
-        <h1 className="text-3xl font-bold mb-4">Welcome back, {user?.firstName}!</h1>
-        <p className="mb-4">Here’s your cookbook:</p>
-        {/* You'll replace this with actual cookbook data */}
-        <Link href="/cookbooks" className="text-blue-500 underline">
-          Go to your cookbook
-        </Link>
-      </main>
-    );
-  }
+  }, [isLoggedIn, user]);
 
   return (
     <main className="p-6">
