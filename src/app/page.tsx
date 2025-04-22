@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import RecipeCard from '../components/RecipeCard'
 import { useRouter } from 'next/navigation';
+import { Recipe } from '../types';
 
 export default function HomePage() {
   const { isLoggedIn, user } = useAuth();
   const router = useRouter();
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
 
   useEffect(() => {
     if (isLoggedIn && user) {
@@ -16,7 +17,7 @@ export default function HomePage() {
     } else {
       fetch('/api/random_recipes') // or your actual backend endpoint
         .then((res) => res.json())
-        .then((data) => setRecipes(data))
+        .then((data: Recipe[]) => setRecipes(data))
         .catch((err) => console.error('Error fetching recipes', err));
     }
   }, [isLoggedIn, user]);

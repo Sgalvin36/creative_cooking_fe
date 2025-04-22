@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { Recipe } from '../types';
 
-export default function RecipeCard({ recipe }) {
+type Props = {
+    recipe: Recipe;
+};
+
+export default function RecipeCard( { recipe }: Props ) {
     return (
         <Link href={`/recipes/${recipe.id}`}>
         <div className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 bg-white">
