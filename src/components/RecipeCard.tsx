@@ -1,0 +1,25 @@
+import Link from "next/link";
+
+export default function RecipeCard({ recipe }) {
+    return (
+        <Link href={`/recipes/${recipe.id}`}>
+        <div className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 bg-white">
+            {recipe.image_url ? (
+            <img
+                src={recipe.image_url}
+                alt={recipe.name}
+                className="w-full h-48 object-cover"
+            />
+            ) : (
+            <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-500">
+                No Image
+            </div>
+            )}
+            {/* Optional: recipe name or meta info */}
+            <div className="p-4">
+            <h2 className="text-lg font-semibold">{recipe.name}</h2>
+            </div>
+        </div>
+        </Link>
+    );
+}

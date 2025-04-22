@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext'; // adjust to your actual path
+import { useAuth } from '../context/AuthContext';
+import RecipeCard from '../components/RecipeCard'
 import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
@@ -37,31 +38,7 @@ export default function HomePage() {
         <h2 className="text-2xl font-semibold mb-4">Explore Recipes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {recipes.map((recipe) => (
-            <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
-              <div className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 bg-white">
-                {recipe.image_url ? (
-                  <img src={recipe.image_url} alt={recipe.name} className="w-full h-48 object-cover" />
-                ) : (
-                  <div className="w-full h-48 bg-gray-100 flex items-center justify-center text-gray-500">
-                    No Image
-                  </div>
-                )}
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold">{recipe.name}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{recipe.description?.slice(0, 80)}...</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {recipe.tags?.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Link>
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       </section>
