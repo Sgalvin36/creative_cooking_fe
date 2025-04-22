@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import RecipeCard from '../components/RecipeCard'
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../context/AuthContext';
 import { Recipe } from '../types';
+import RecipeCard from '../components/RecipeCard'
 
 export default function HomePage() {
   const { isLoggedIn, user } = useAuth();
