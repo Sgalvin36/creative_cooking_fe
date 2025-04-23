@@ -8,7 +8,9 @@ type Props = {
 export default function RecipeCard( { recipe }: Props ) {
     return (
         <Link href={`/recipes/${recipe.id}`}>
-        <div className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 bg-white">
+        <div className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 bg-white"
+            data-cy="recipe-card"
+        >
             {recipe.image_url ? (
             <img
                 src={recipe.image_url}

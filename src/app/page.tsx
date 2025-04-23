@@ -17,7 +17,7 @@ export default function HomePage() {
     } else {
       fetch('/api/random_recipes') // or your actual backend endpoint
         .then((res) => res.json())
-        .then((data: Recipe[]) => setRecipes(data))
+        .then((data) => setRecipes(data.data.recipes))
         .catch((err) => console.error('Error fetching recipes', err));
     }
   }, [isLoggedIn, user]);
