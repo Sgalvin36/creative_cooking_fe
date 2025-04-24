@@ -3,16 +3,17 @@
 import Link from 'next/link';
 import { User } from 'react-feather';
 import { useAuth } from '../context/AuthContext';
+import { SiteUser } from '@/types'
 
 
 export default function NavBar() {
 
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, user } = useAuth();
     return (
         <div className="flex gap-4">
             {isLoggedIn ? (
                 <nav className="flex gap-4">
-                    <a href="/cookbooks/[id]">My Cookbook</a>
+                    <a href="[id]/cookbooks">My Cookbook</a>
                     <a href="/recipes">Recipes</a>
                     <a href="/cookbooks">Cookbooks</a>
                     <a href="/about">About</a>

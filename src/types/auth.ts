@@ -1,4 +1,4 @@
-export type User = {
+export type SiteUser = {
     id: string;
     firstName: string;
     lastName: string;
@@ -6,8 +6,8 @@ export type User = {
 
 export type AuthContextType = {
     isLoggedIn: boolean;
-    user: User | null;
+    user: SiteUser | null;
     token: string | null;
-    logIn: (token: string, userData: User) => void;
+    logIn: (token: string, userData: SiteUser) => void;
     logOut: () => void;
 };
