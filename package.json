@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check-lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint-fix": "eslint . --ext .js,.jsx,.ts,.tsx --cache --fix",
     "cypress:open": "cypress open"
   },
   "dependencies": {
@@ -17,15 +19,24 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@eslint/js": "^9.25.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.31.0",
+    "@typescript-eslint/parser": "^8.31.0",
     "cypress": "^14.2.1",
-    "eslint": "^9",
+    "eslint": "^9.25.1",
     "eslint-config-next": "15.1.5",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.0.0",
     "postcss": "^8",
+    "prettier": "3.5.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0",
     "webpack-cli": "^6.0.1"
   }
 }
