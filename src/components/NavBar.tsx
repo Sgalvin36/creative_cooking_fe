@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { User } from "react-feather";
 import { useAuth } from "../context/AuthContext";
-import { SiteUser } from "@/types";
 
 export default function NavBar() {
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn } = useAuth();
   return (
     <div className="flex gap-4">
       {isLoggedIn ? (

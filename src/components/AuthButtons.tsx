@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function AuthButtons() {
   const router = useRouter();
-  const { isLoggedIn, user, logIn, logOut } = useAuth();
+  const { isLoggedIn, logIn, logOut } = useAuth();
 
   const redirect = () => {
     router.push("/register");
