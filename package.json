@@ -40,5 +40,11 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.0",
     "webpack-cli": "^6.0.1"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix",
+    "*.js": "eslint --fix",
+    "*.tsx": "eslint --fix",
+    "*.jsx": "eslint --fix"
   }
 }
