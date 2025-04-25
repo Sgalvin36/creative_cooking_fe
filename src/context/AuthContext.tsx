@@ -13,7 +13,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<SiteUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  console.log("hello,world");
   const logIn = (newToken: string, userData: SiteUser) => {
     setToken(newToken);
     setUser(userData);
