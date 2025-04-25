@@ -47,7 +47,7 @@ export default defineConfig([
     rules: {
       ...pluginReact.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
-      ...tsPlugin.configs.recommended.rules,
+      ...tsPlugin.configs.strict.rules,
       ...prettier.configs.recommended.rules,
       "prettier/prettier": "warn",
     },
