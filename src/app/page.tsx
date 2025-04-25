@@ -44,8 +44,8 @@ export default function HomePage() {
           cookbook. Customize your recipes with thoughtful additions,
           subtractions, or substitutions that makes the recipe your very own.
           Sign up to save your favorite recipes and modifications and share with
-          others. Search through other user's creations and modifications to see
-          what flavors best fit you.
+          others. Search through other user&apos;s creations and modifications
+          to see what flavors best fit you.
         </p>
       </section>
 
