@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  console.log("hello,world");
   const logIn = (newToken: string, userData: SiteUser) => {
     setToken(newToken);
     setUser(userData);
