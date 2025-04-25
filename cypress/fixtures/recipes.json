@@ -1,0 +1,109 @@
+{
+    "data": {
+    "recipes": [
+        {
+            "id": "1",
+            "name": "Spaghetti Supreme",
+            "image": "https://via.placeholder.com/300x200.png?text=Spaghetti+Supreme",
+            "servingSize": 4,
+            "recipeInstructions": [
+                { "instructionStep": 1, "instruction": "Boil pasta until al dente" },
+                { "instructionStep": 2, "instruction": "Sauté garlic and onions" },
+                { "instructionStep": 3, "instruction": "Add tomato sauce and simmer" }
+            ],
+            "recipeIngredients": [
+                {
+                "quantity": 16,
+                "measurement": { "unit": "oz" },
+                "ingredient": { "name": "spaghetti noodles" }
+                },
+                {
+                "quantity": 2,
+                "measurement": { "unit": "cups" },
+                "ingredient": { "name": "tomato sauce" }
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Avocado Toast Deluxe",
+            "image": "https://via.placeholder.com/300x200.png?text=Avocado+Toast",
+            "servingSize": 2,
+            "recipeInstructions": [
+                { "instructionStep": 1, "instruction": "Toast the bread" },
+                { "instructionStep": 2, "instruction": "Mash avocados with lime and salt" },
+                { "instructionStep": 3, "instruction": "Spread on toast and top with egg" }
+            ],
+            "recipeIngredients": [
+                {
+                "quantity": 2,
+                "measurement": { "unit": "slices" },
+                "ingredient": { "name": "whole grain bread" }
+                },
+                {
+                "quantity": 1,
+                "measurement": { "unit": "whole" },
+                "ingredient": { "name": "avocado" }
+                },
+                {
+                "quantity": 1,
+                "measurement": { "unit": "whole" },
+                "ingredient": { "name": "egg" }
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Berry Smoothie",
+            "image": "https://via.placeholder.com/300x200.png?text=Berry+Smoothie",
+            "servingSize": 1,
+            "recipeInstructions": [
+                { "instructionStep": 1, "instruction": "Add all ingredients to blender" },
+                { "instructionStep": 2, "instruction": "Blend until smooth" },
+                { "instructionStep": 3, "instruction": "Serve chilled" }
+            ],
+            "recipeIngredients": [
+                {
+                "quantity": 1,
+                "measurement": { "unit": "cup" },
+                "ingredient": { "name": "strawberries" }
+                },
+                {
+                "quantity": 0.5,
+                "measurement": { "unit": "cup" },
+                "ingredient": { "name": "blueberries" }
+                },
+                {
+                "quantity": 1,
+                "measurement": { "unit": "cup" },
+                "ingredient": { "name": "almond milk" }
+                }
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Sugar Deli",
+            "image": "https://arthurmillerfoundation.org/wp-content/uploads/2018/06/default-placeholder.png",
+            "servingSize": 3,
+            "recipeInstructions": [
+                { "instructionStep": 1, "instruction": "Preheat oven to 350°F" },
+                { "instructionStep": 2, "instruction": "Chop the carrots" },
+                { "instructionStep": 3, "instruction": "Burn the carrots" },
+                { "instructionStep": 4, "instruction": "Dispose of the carrots" }
+            ],
+            "recipeIngredients": [
+                {
+                "quantity": 3.0,
+                "measurement": { "unit": "cups" },
+                "ingredient": { "name": "corn" }
+                },
+                {
+                "quantity": 32.0,
+                "measurement": { "unit": "tablespoons" },
+                "ingredient": { "name": "butter" }
+                }
+            ]
+        }
+    ]
+    }
+}

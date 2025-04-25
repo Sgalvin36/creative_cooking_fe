@@ -1,16 +1,55 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig } from "eslint/config";
+import globals from "globals";
+import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+import pluginReact from "eslint-plugin-react";
+import prettier from "eslint-plugin-prettier";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
-
-export default eslintConfig;
+export default defineConfig([
+  {
+    ignores: [
+      "node_modules",
+      ".next",
+      "/.next/",
+      "build",
+      "next-env.d.ts",
+      "yarn.lock",
+      "public",
+      "package-lock.json",
+      "cypress",
+    ],
+  },
+  {
+    files: ["**/*.{js,ts,jsx,tsx}"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        projectService: true,
+        tsconfigRootDir: process.cwd(),
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+    plugins: {
+      "@typescript-eslint": tsPlugin,
+      react: pluginReact,
+      prettier,
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+    rules: {
+      ...pluginReact.configs.recommended.rules,
+      "react/react-in-jsx-scope": "off",
+      ...tsPlugin.configs.strict.rules,
+      ...prettier.configs.recommended.rules,
+      "prettier/prettier": "warn",
+    },
+  },
+]);
