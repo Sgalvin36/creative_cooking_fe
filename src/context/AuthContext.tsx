@@ -7,13 +7,13 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { User, AuthContextType } from "../types";
+import { SiteUser, AuthContextType } from "../types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SiteUser | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const logIn = (newToken: string, userData: User) => {
+  const logIn = (newToken: string, userData: SiteUser) => {
     setToken(newToken);
     setUser(userData);
     setIsLoggedIn(true);

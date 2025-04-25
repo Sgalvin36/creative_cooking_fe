@@ -1,6 +1,7 @@
 import { defineConfig } from "eslint/config";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import pluginReact from "eslint-plugin-react";
 import prettier from "eslint-plugin-prettier";
 
@@ -21,10 +22,12 @@ export default defineConfig([
   {
     files: ["**/*.{js,ts,jsx,tsx}"],
     languageOptions: {
-      parser: tseslint.parser,
+      parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
+        project: "./tsconfig.json",
+        tsconfigRootDir: process.cwd(),
       },
       globals: {
         ...globals.browser,
@@ -32,7 +35,7 @@ export default defineConfig([
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint.plugin,
+      "@typescript-eslint": tsPlugin,
       react: pluginReact,
       prettier,
     },
@@ -44,9 +47,9 @@ export default defineConfig([
     rules: {
       ...pluginReact.configs.recommended.rules,
       "react/react-in-jsx-scope": "off",
-      "prettier/prettier": "warn",
-      ...tseslint.configs.recommended.rules,
+      ...tsPlugin.configs.recommended.rules,
       ...prettier.configs.recommended.rules,
+      "prettier/prettier": "warn",
     },
   },
 ]);
