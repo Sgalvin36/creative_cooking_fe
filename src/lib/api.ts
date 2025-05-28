@@ -21,6 +21,28 @@ export async function loginUser(
   return data;
 }
 
-// export async function fetchRandomRecipes() {
-//   const res = await fetch("/api/v1/recipes");
-// }
+export async function fetchGraphQL<TData, TVariables = Record<string, unknown>>(
+  query: string,
+  variables?: TVariables,
+  operationName?: string,
+): Promise<TData> {
+  const res = await fetch(`${baseUrl}/api/v1/graphql`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables,
+      operationName,
+    }),
+  });
+
+  const result = await res.json();
+
+  if (result.errors) {
+    throw new Error(result.errors[0].message);
+  }
+
+  return result.data as TData;
+}
