@@ -6,20 +6,14 @@ import { useAuth } from "../context/AuthContext";
 
 export default function AuthButtons() {
   const router = useRouter();
-  const { isLoggedIn, logIn, logOut } = useAuth();
+  const { isLoggedIn, logOut } = useAuth();
 
   const redirect = () => {
     router.push("/register");
   };
 
-  const handleFakeLogin = () => {
-    const fakeToken = "abc123xyz"; // This would come from your backend
-    const fakeUser = {
-      id: "1",
-      firstName: "Shane",
-      lastName: "Galvin",
-    };
-    logIn(fakeToken, fakeUser);
+  const handleLogin = () => {
+    router.push("/login");
   };
 
   return (
@@ -29,7 +23,7 @@ export default function AuthButtons() {
           Logout
         </Button>
       ) : (
-        <Button onClick={handleFakeLogin} variant="default">
+        <Button onClick={handleLogin} variant="default">
           Login
         </Button>
       )}
