@@ -1,20 +1,29 @@
 export interface Recipe {
-  id: number;
+  id: number | string;
   name: string;
-  image_url?: string;
+  image?: string;
+  servingSize?: number;
 }
 
-export interface Ingredient {
-  name: string;
+export interface RecipeInstruction {
+  instructionStep: number;
+  instruction: string;
+}
+
+export interface RecipeIngredient {
   quantity: number;
-  unit: string;
+  measurement: {
+    unit: string;
+  };
+  ingredient: {
+    name: string;
+  };
 }
 
 export interface FullRecipe extends Recipe {
-  ingredients: Ingredient[];
-  instructions: string[];
-  serving_size: number;
-  total_price: number;
+  recipeIngredients: RecipeIngredient[];
+  RecipeInstructions: RecipeInstruction[];
+  total_price?: number;
   cooking_tips?: string[];
   cookware?: string[];
 }
