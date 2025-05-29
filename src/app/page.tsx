@@ -5,22 +5,31 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { Recipe } from "../types";
 import RecipeCard from "../components/RecipeCard";
+import { useGraphQLQuery } from "@/graphql/hooks/useGraphQLQuery";
+import { GET_RANDOM_RECIPES } from "@/graphql/queries";
 
+interface RandomRecipesData {
+  randomRecipes: Recipe[];
+}
 export default function HomePage() {
   const { isLoggedIn, user } = useAuth();
   const router = useRouter();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
+  const { data, loading, error } = useGraphQLQuery<
+    RandomRecipesData,
+    undefined
+  >(GET_RANDOM_RECIPES, undefined, "GetRandomRecipes");
+
   useEffect(() => {
     if (isLoggedIn && user) {
       router.push(`/${user.id}/cookbook`);
-    } else {
-      fetch("/api/random_recipes") // or your actual backend endpoint
-        .then((res) => res.json())
-        .then((data) => setRecipes(data.data.recipes))
-        .catch((err) => console.error("Error fetching recipes", err));
     }
   }, [isLoggedIn, user]);
+
+  useEffect(() => {
+    if (data?.randomRecipes) setRecipes(data.randomRecipes);
+  }, [data]);
 
   return (
     <main className="p-6">
@@ -52,9 +61,21 @@ export default function HomePage() {
       <section>
         <h2 className="text-2xl font-semibold mb-4">Explore Recipes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
+          {!isLoggedIn && (
+            <>
+              {loading && <p>Loading recipes...</p>}
+              {error && (
+                <p className="text-red-500">
+                  Error: {error.message || "Something went wrong."}
+                </p>
+              )}
+              {!loading &&
+                !error &&
+                recipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))}
+            </>
+          )}
         </div>
       </section>
     </main>
