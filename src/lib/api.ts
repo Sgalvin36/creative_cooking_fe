@@ -46,8 +46,11 @@ export async function fetchGraphQL<TData, TVariables = Record<string, unknown>>(
     }
 
     return result.data as TData;
-  } catch (error) {
-    console.error("GraphQL fetch failed, error");
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw new Error("An unknown error occurred");
+    }
   }
 }

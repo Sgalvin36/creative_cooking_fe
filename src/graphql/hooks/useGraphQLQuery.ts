@@ -8,11 +8,11 @@ export function useGraphQLQuery<TData, TVariables>(
 ): {
   data: TData | null;
   loading: boolean;
-  error: string | null;
+  error: Error | null;
 } {
   const [data, setData] = useState<TData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     setLoading(true);
