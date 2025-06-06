@@ -1,13 +1,15 @@
+import { LoginCredentials } from ".";
+
 export type SiteUser = {
-  id: string;
-  firstName: string;
-  lastName: string;
+  id: number;
+  name: string;
+  email: string;
 };
 
 export type AuthContextType = {
   isLoggedIn: boolean;
   user: SiteUser | null;
   token: string | null;
-  logIn: (token: string, userData: SiteUser) => void;
+  logIn: (credentials: LoginCredentials) => Promise<void>;
   logOut: () => void;
 };

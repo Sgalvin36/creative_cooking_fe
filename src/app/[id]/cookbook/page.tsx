@@ -20,7 +20,7 @@ export default function Cookbook() {
       <section>
         {user && (
           <h2 className="text-2xl font-semibold mb-4">
-            {user.firstName}&apos;s Cookbook
+            {user.name}&apos;s Cookbook
           </h2>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

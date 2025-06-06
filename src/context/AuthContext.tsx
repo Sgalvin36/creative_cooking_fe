@@ -7,7 +7,13 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { SiteUser, AuthContextType } from "../types";
+import {
+  SiteUser,
+  AuthContextType,
+  LoginCredentials,
+  LoginResponse,
+} from "../types";
+import { loginUser } from "../lib/api";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -27,7 +33,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const logIn = (newToken: string, userData: SiteUser) => {
+  const logIn = async (credentials: LoginCredentials) => {
+    const response: LoginResponse = await loginUser(credentials);
+
+    const newToken = response.token;
+    const userData = response.user;
+
     setToken(newToken);
     setUser(userData);
     setIsLoggedIn(true);

@@ -12,9 +12,9 @@ export default function RecipeCard({ recipe }: Props) {
         className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-200 bg-white"
         data-cy="recipe-card"
       >
-        {recipe.image_url ? (
+        {recipe.image ? (
           <img
-            src={recipe.image_url}
+            src={recipe.image}
             alt={recipe.name}
             className="w-full h-48 object-cover"
           />
