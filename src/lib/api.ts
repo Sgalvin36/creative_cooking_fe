@@ -26,23 +26,28 @@ export async function fetchGraphQL<TData, TVariables = Record<string, unknown>>(
   variables?: TVariables,
   operationName?: string,
 ): Promise<TData> {
-  const res = await fetch(`${baseUrl}/api/v1/graphql`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query,
-      variables,
-      operationName,
-    }),
-  });
+  try {
+    const res = await fetch(`${baseUrl}/api/v1/graphql`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+        operationName,
+      }),
+    });
 
-  const result = await res.json();
+    const result = await res.json();
 
-  if (result.errors) {
-    throw new Error(result.errors[0].message);
+    if (result.errors) {
+      throw new Error(result.errors[0].message);
+    }
+
+    return result.data as TData;
+  } catch (error) {
+    console.error("GraphQL fetch failed, error");
+    throw error;
   }
-
-  return result.data as TData;
 }
