@@ -2,7 +2,9 @@ import { LoginCredentials } from ".";
 
 export type SiteUser = {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
+  user_name: string;
   email: string;
 };
 
