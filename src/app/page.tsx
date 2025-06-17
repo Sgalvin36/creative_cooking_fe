@@ -18,8 +18,8 @@ export default function HomePage() {
 
   const { data, loading, error } = useGraphQLQuery<
     RandomRecipesData,
-    undefined
-  >(GET_RANDOM_RECIPES, undefined, "GetRandomRecipes");
+    { count: number }
+  >(GET_RANDOM_RECIPES, { count: 9 }, "GetRandomRecipes");
 
   useEffect(() => {
     if (isLoggedIn && user) {
