@@ -14,6 +14,7 @@ import {
   LoginResponse,
 } from "../types";
 import { loginUser } from "../lib/api";
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -21,6 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<SiteUser | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
@@ -52,6 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoggedIn(false);
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
+    router.push("/");
   };
 
   return (

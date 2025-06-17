@@ -3,17 +3,26 @@ import { Recipe } from "@/types";
 import { useAuth } from "@/context/AuthContext";
 import RecipeCard from "@/components/RecipeCard";
 import { useState, useEffect } from "react";
+import { useGraphQLQuery } from "@/graphql/hooks/useGraphQLQuery";
+import { GET_PERSONAL_COOKBOOK } from "@/graphql/queries";
+
+interface CookbookData {
+  personalCookbook: Recipe[];
+}
 
 export default function Cookbook() {
   const { user } = useAuth();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
+  const { data, loading, error } = useGraphQLQuery<CookbookData, undefined>(
+    GET_PERSONAL_COOKBOOK,
+    undefined,
+    "GetPersonalCookbook",
+  );
+
   useEffect(() => {
-    fetch("/api/cookbook_recipes")
-      .then((res) => res.json())
-      .then((data) => setRecipes(data.data.recipes))
-      .catch((err) => console.error("Error fetching recipes", err));
-  }, []);
+    if (data?.personalCookbook) setRecipes(data.personalCookbook);
+  }, [data]);
 
   return (
     <main className="p-6">
@@ -24,15 +33,19 @@ export default function Cookbook() {
           </h2>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {recipes.length > 0 ? (
-            recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))
-          ) : (
-            <div className="col-span-full text-center text-gray-600 text-lg">
-              Add your first recipe to get started!
-            </div>
-          )}
+          <>
+            {loading && <p>Loading recipes...</p>}
+            {error && (
+              <p className="text-red-500">
+                Error: {error.message || "Something went wrong."}
+              </p>
+            )}
+            {!loading &&
+              !error &&
+              recipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+          </>
         </div>
       </section>
     </main>
