@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/Button";
+import { useAuth } from "../../context/AuthContext";
 import { useGraphQLMutation } from "@/graphql/hooks/useGraphQLMutation";
 import { REGISTER_USER } from "@/graphql/mutations";
 import {
   RegisterUserVariables,
   RegisterFormData,
-  LoginResponse,
+  RegistrationResponse,
+  ModalProps,
 } from "@/types";
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function RegistrationModal({ isOpen, onClose }: Props) {
+export default function RegistrationModal({ isOpen, onClose }: ModalProps) {
   const [formData, setFormData] = useState<RegisterFormData>({
     firstName: "",
     lastName: "",
@@ -21,12 +18,15 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
     password: "",
     confirmPassword: "",
   });
+
   const [formError, setFormError] = useState("");
 
-  const { mutate, loading } = useGraphQLMutation<
-    LoginResponse,
+  const { mutate, data, loading, error } = useGraphQLMutation<
+    RegistrationResponse,
     RegisterUserVariables
   >(REGISTER_USER, "RegisterUser");
+
+  const { registerUser } = useAuth();
 
   useEffect(() => {
     if (!isOpen) {
@@ -41,38 +41,41 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (error) {
+      setFormError(error.message);
+    }
+  }, [error]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { password, confirmPassword, firstName, lastName, email } = formData;
+    const { confirmPassword, ...submitData } = formData;
 
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setFormError("Please fill in all fields.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
+    if (formData.password !== confirmPassword) {
       setFormError("Passwords do not match.");
       return;
     }
 
-    setFormError("");
-
     try {
-      await mutate({
-        firstName,
-        lastName,
-        userName: email.toLowerCase(),
-        password,
-      });
-
-      onClose(); // Close modal on success
+      await mutate(submitData);
+      if (data?.user && data.token) {
+        await registerUser(data.user, data.token);
+        setFormError("");
+        onClose();
+      } else if (data?.errors.length) {
+        setFormError(data.errors.join(", "));
+      }
     } catch (error) {
-      setFormError(error);
+      if (error instanceof Error) {
+        setFormError(error.message);
+      } else {
+        setFormError("An unknown error occurred");
+      }
     }
   };
 

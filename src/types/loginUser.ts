@@ -20,3 +20,7 @@ export interface RegisterUserVariables {
 export interface RegisterFormData extends RegisterUserVariables {
   confirmPassword: string;
 }
+
+export interface RegistrationResponse extends LoginResponse {
+  errors: string[];
+}
