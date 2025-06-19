@@ -1,15 +1,21 @@
 export const REGISTER_USER = `
-mutation RegisterUser($input: RegisterUserInput!) {
-  registerUser(input: $input) {
-    token
-    user {
-      id
-      firstName
-      lastName
-      userName
-      slug
+  mutation RegisterUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    registerUser(
+      input: {
+        firstName: $firstName
+        lastName: $lastName
+        email: $email
+        password: $password
+      }
+    ) {
+      token
+      user {
+        id
+        firstName
+        lastName
+        email
+        slug
+      }
     }
-    errors
   }
-}
 `;

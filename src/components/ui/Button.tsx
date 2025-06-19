@@ -2,11 +2,9 @@
 
 import React from "react";
 
-interface ButtonProps {
-  onClick?: () => void;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline" | "primary" | "secondary" | "danger";
   children: React.ReactNode;
-  type?: "button" | "submit" | "reset";
 }
 
 export function Button({

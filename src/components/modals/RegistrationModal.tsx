@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/Button";
+import { useGraphQLMutation } from "@/graphql/hooks/useGraphQLMutation";
+import { REGISTER_USER } from "@/graphql/mutations";
+import {
+  RegisterUserVariables,
+  RegisterFormData,
+  LoginResponse,
+} from "@/types";
 
 interface Props {
   isOpen: boolean;
@@ -7,15 +14,19 @@ interface Props {
 }
 
 export default function RegistrationModal({ isOpen, onClose }: Props) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegisterFormData>({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [formError, setFormError] = useState("");
 
-  const [error, setError] = useState("");
+  const { mutate, loading } = useGraphQLMutation<
+    LoginResponse,
+    RegisterUserVariables
+  >(REGISTER_USER, "RegisterUser");
 
   useEffect(() => {
     if (!isOpen) {
@@ -26,7 +37,7 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
         password: "",
         confirmPassword: "",
       });
-      setError("");
+      setFormError("");
     }
   }, [isOpen]);
 
@@ -40,20 +51,29 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
     const { password, confirmPassword, firstName, lastName, email } = formData;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setError("Please fill in all fields.");
+      setFormError("Please fill in all fields.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setFormError("Passwords do not match.");
       return;
     }
 
-    setError("");
+    setFormError("");
 
-    console.log("Registering user:", formData);
-    // TODO: Send data to your API route here
-    onClose(); // close modal on success or move this based on actual response
+    try {
+      await mutate({
+        firstName,
+        lastName,
+        userName: email.toLowerCase(),
+        password,
+      });
+
+      onClose(); // Close modal on success
+    } catch (error) {
+      setFormError(error);
+    }
   };
 
   if (!isOpen) return null;
@@ -69,9 +89,9 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
         </button>
         <h2 className="text-xl font-semibold mb-4">Register</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
+          {formError && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
-              {error}
+              {formError}
             </div>
           )}
           <input
@@ -120,12 +140,13 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
             className="w-full border border-gray-300 rounded px-3 py-2 text-black"
           />
           <div className="flex justify-end gap-2 pt-2">
-            <Button onClick={onClose} variant="secondary">
+            <Button onClick={onClose} variant="secondary" disabled={loading}>
               Cancel
             </Button>
-            <Button type="submit" variant="default">
+            <Button type="submit" variant="default" disabled={loading}>
               Register
             </Button>
+            {loading ? "Registering..." : "Register"}
           </div>
         </form>
       </div>

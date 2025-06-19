@@ -14,4 +14,5 @@ export type AuthContextType = {
   token: string | null;
   logIn: (credentials: LoginCredentials) => Promise<void>;
   logOut: () => void;
+  registerUser: (userData: SiteUser, token: string) => void;
 };
