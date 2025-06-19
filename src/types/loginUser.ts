@@ -21,6 +21,18 @@ export interface RegisterFormData extends RegisterUserVariables {
   confirmPassword: string;
 }
 
-export interface RegistrationResponse extends LoginResponse {
-  errors: string[];
+export interface graphQLUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  slug: string;
+}
+
+export interface RegistrationResponse {
+  registerUser: {
+    user: graphQLUser;
+    token: string;
+    errors: string[];
+  };
 }

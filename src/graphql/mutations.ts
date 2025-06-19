@@ -16,6 +16,7 @@ export const REGISTER_USER = `
         email
         slug
       }
+    errors
     }
   }
 `;

@@ -8,6 +8,7 @@ import {
   RegisterFormData,
   RegistrationResponse,
   ModalProps,
+  graphQLUser,
 } from "@/types";
 
 export default function RegistrationModal({ isOpen, onClose }: ModalProps) {
@@ -63,12 +64,28 @@ export default function RegistrationModal({ isOpen, onClose }: ModalProps) {
 
     try {
       await mutate(submitData);
-      if (data?.user && data.token) {
-        await registerUser(data.user, data.token);
+      console.log("Data", data);
+      console.log("Error", error);
+
+      const userResponse = data?.registerUser;
+
+      if (userResponse?.user && userResponse.token) {
+        const graphqlUser: graphQLUser = userResponse.user;
+
+        const normalizedUser = {
+          id: graphqlUser.id,
+          first_name: graphqlUser.firstName,
+          last_name: graphqlUser.lastName,
+          email: graphqlUser.email,
+          slug: graphqlUser.slug,
+        };
+
+        await registerUser(normalizedUser, userResponse.token);
+
         setFormError("");
         onClose();
-      } else if (data?.errors.length) {
-        setFormError(data.errors.join(", "));
+      } else if (userResponse?.errors && userResponse.errors.length > 0) {
+        setFormError(userResponse.errors.join(", "));
       }
     } catch (error) {
       if (error instanceof Error) {

@@ -4,8 +4,9 @@ export type SiteUser = {
   id: number;
   first_name: string;
   last_name: string;
-  user_name: string;
+  // user_name: string;
   email: string;
+  slug: string;
 };
 
 export type AuthContextType = {
