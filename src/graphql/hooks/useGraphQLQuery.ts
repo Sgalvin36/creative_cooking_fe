@@ -11,7 +11,7 @@ export function useGraphQLQuery<TData, TVariables>(
   error: Error | null;
 } {
   const [data, setData] = useState<TData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -19,12 +19,15 @@ export function useGraphQLQuery<TData, TVariables>(
     fetchGraphQL<TData, TVariables>(query, variables, operationName)
       .then((res) => {
         setData(res);
-        setLoading(false);
       })
-      .catch((err) => {
-        setError(err.message || "Error fetching recipes");
-        setLoading(false);
-      });
+      .catch((err: unknown) => {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("An unknown error occurred fetching recipes"));
+        }
+      })
+      .finally(() => setLoading(false));
   }, [query, operationName, JSON.stringify(variables)]);
 
   return { data, loading, error };
