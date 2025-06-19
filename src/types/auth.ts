@@ -2,8 +2,11 @@ import { LoginCredentials } from ".";
 
 export type SiteUser = {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
+  // user_name: string;
   email: string;
+  slug: string;
 };
 
 export type AuthContextType = {
@@ -12,4 +15,5 @@ export type AuthContextType = {
   token: string | null;
   logIn: (credentials: LoginCredentials) => Promise<void>;
   logOut: () => void;
+  registerUser: (userData: SiteUser, token: string) => void;
 };

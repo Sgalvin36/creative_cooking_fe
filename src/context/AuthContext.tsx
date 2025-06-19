@@ -35,17 +35,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const logIn = async (credentials: LoginCredentials) => {
-    const response: LoginResponse = await loginUser(credentials);
-
-    const newToken = response.token;
-    const userData = response.user;
-
+  const handleAuthSuccess = (userData: SiteUser, newToken: string) => {
     setToken(newToken);
     setUser(userData);
     setIsLoggedIn(true);
     localStorage.setItem("authToken", newToken);
     localStorage.setItem("authUser", JSON.stringify(userData));
+  };
+
+  const logIn = async (credentials: LoginCredentials) => {
+    const response: LoginResponse = await loginUser(credentials);
+    handleAuthSuccess(response.user, response.token);
+  };
+
+  const registerUser = (userData: SiteUser, token: string) => {
+    handleAuthSuccess(userData, token);
   };
 
   const logOut = () => {
@@ -58,7 +62,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, token, logIn, logOut }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, user, token, logIn, logOut, registerUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
