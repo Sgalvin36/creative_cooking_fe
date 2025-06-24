@@ -11,8 +11,10 @@ export async function loginUser(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      username: credentials.username,
       password: credentials.password,
+      ...(credentials.email
+        ? { email: credentials.email }
+        : { username: credentials.username }),
     }),
   });
 
