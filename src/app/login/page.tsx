@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 export default function Login() {
   const router = useRouter();
   const { logIn } = useAuth();
-  const [username, setUsername] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -19,16 +19,18 @@ export default function Login() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event?.preventDefault();
-    setError("");
+    setError(null);
 
-    if (!username || !password) {
+    if (!identifier || !password) {
       setError("Please fill in both fields.");
       return;
     }
 
     const credentials: LoginCredentials = {
-      username,
       password,
+      ...(identifier.includes("@")
+        ? { email: identifier }
+        : { username: identifier }),
     };
 
     try {
@@ -47,20 +49,20 @@ export default function Login() {
     <div>
       <h1>Login Page</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="identifier">Email or Username:</label>
         <input
           type="text"
-          id="username"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          id="identifier"
+          name="identifier"
+          value={identifier}
+          onChange={(e) => setIdentifier(e.target.value)}
           required
         />
         <br />
         <br />
         <label htmlFor="password">Password:</label>
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
           value={password}
