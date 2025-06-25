@@ -1,19 +1,16 @@
 "use client";
 
 import { Button } from "./ui/Button";
-import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import RegistrationModal from "./modals/RegistrationModal";
+import LoginModal from "./modals/LoginModal";
+
+type ModalSwitch = "login" | "register" | null;
 
 export default function AuthButtons() {
-  const router = useRouter();
   const { isLoggedIn, logOut } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleLogin = () => {
-    router.push("/login");
-  };
+  const [activeModal, setActiveModal] = useState<ModalSwitch>(null);
 
   return (
     <div className="flex gap-4">
@@ -22,18 +19,22 @@ export default function AuthButtons() {
           Logout
         </Button>
       ) : (
-        <Button onClick={handleLogin} variant="default">
+        <Button onClick={() => setActiveModal("login")} variant="default">
           Login
         </Button>
       )}
       {isLoggedIn ? null : (
-        <Button onClick={() => setIsModalOpen(true)} variant="default">
+        <Button onClick={() => setActiveModal("register")} variant="default">
           Register
         </Button>
       )}
       <RegistrationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={activeModal === "register"}
+        onClose={() => setActiveModal(null)}
+      />
+      <LoginModal
+        isOpen={activeModal === "login"}
+        onClose={() => setActiveModal(null)}
       />
     </div>
   );
