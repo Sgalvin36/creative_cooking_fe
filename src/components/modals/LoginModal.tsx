@@ -8,6 +8,7 @@ export default function LoginModal({ isOpen, onClose }: ModalProps) {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -32,7 +33,7 @@ export default function LoginModal({ isOpen, onClose }: ModalProps) {
         ? { email: identifier }
         : { username: identifier }),
     };
-
+    setLoading(true);
     try {
       await logIn(credentials);
       onClose();
@@ -42,6 +43,8 @@ export default function LoginModal({ isOpen, onClose }: ModalProps) {
       } else {
         setError("An unexpected error occurred.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,8 +88,8 @@ export default function LoginModal({ isOpen, onClose }: ModalProps) {
             <Button onClick={onClose} variant="secondary">
               Cancel
             </Button>
-            <Button type="submit" variant="default">
-              Login
+            <Button type="submit" variant="default" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
             </Button>
           </div>
         </form>
