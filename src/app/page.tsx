@@ -3,14 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
-import { Recipe } from "../types";
+import { Recipe, RandomRecipesData } from "../types";
 import RecipeCard from "../components/RecipeCard";
 import { useGraphQLQuery } from "@/graphql/hooks/useGraphQLQuery";
 import { GET_RANDOM_RECIPES } from "@/graphql/queries";
 
-interface RandomRecipesData {
-  randomRecipes: Recipe[];
-}
 export default function HomePage() {
   const { isLoggedIn, user } = useAuth();
   const router = useRouter();

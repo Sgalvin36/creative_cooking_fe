@@ -31,3 +31,7 @@ export interface FullRecipe extends Recipe {
 export interface RecipePreview extends Recipe {
   isFavorited?: boolean;
 }
+
+export interface RandomRecipesData {
+  randomRecipes: Recipe[];
+}
