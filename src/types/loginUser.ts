@@ -1,8 +1,9 @@
 import { SiteUser } from ".";
 
 export interface LoginCredentials {
-  username: string;
   password: string;
+  username?: string;
+  email?: string;
 }
 
 export interface LoginResponse {
