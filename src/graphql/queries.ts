@@ -11,7 +11,7 @@ query GetPersonalCookbook {
 
 export const GET_RECIPE = `
   query GetRecipe($id: ID!) {
-    recipe(id: $id) {
+    oneRecipe(id: $id) {
       id
       name
       image
