@@ -22,7 +22,7 @@ export interface RecipeIngredient {
 
 export interface FullRecipe extends Recipe {
   recipeIngredients: RecipeIngredient[];
-  RecipeInstructions: RecipeInstruction[];
+  recipeInstructions: RecipeInstruction[];
   total_price?: number;
   cooking_tips?: string[];
   cookware?: string[];

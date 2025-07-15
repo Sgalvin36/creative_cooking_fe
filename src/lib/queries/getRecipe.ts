@@ -3,9 +3,9 @@ import { fetchGraphQL } from "@/lib/api";
 import { FullRecipe } from "@/types";
 
 export async function getRecipe(id: string) {
-  const data = await fetchGraphQL<{ recipe: FullRecipe }, { id: string }>(
+  const data = await fetchGraphQL<{ oneRecipe: FullRecipe }, { id: string }>(
     GET_RECIPE,
     { id },
   );
-  return data.recipe;
+  return data.oneRecipe;
 }
