@@ -1,4 +1,5 @@
 import { getRecipe } from "@/lib/queries/getRecipe";
+import RecipeActionBar from "./RecipeActionBar";
 
 type rParams = Promise<{ id: string }>;
 
@@ -19,6 +20,8 @@ export default async function RecipePage({ params }: { params: rParams }) {
         </h1>
       </div>
 
+      {/* Actions Bar */}
+      <RecipeActionBar />
       {/* Ingredients + future mods */}
       <div className="flex flex-row p-8 space-x-8">
         {/* Ingredients */}
