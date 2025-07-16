@@ -1,53 +1,37 @@
-"use client";
-import { Recipe } from "@/types";
-import { useAuth } from "@/context/AuthContext";
-import RecipeCard from "@/components/RecipeCard";
-import { useState, useEffect } from "react";
-import { useGraphQLQuery } from "@/graphql/hooks/useGraphQLQuery";
-import { GET_PERSONAL_COOKBOOK } from "@/graphql/queries";
+// import { redirect } from "next/navigation";
+// import Link from "next/link";
+// import { useAuth } from "@/context/AuthContext";
+// import { getMyCookbooks } from "@/lib/api";
 
-interface CookbookData {
-  personalCookbook: Recipe[];
-}
+// export default async function MyCookbooksPage() {
+//   const { user } = useAuth();
 
-export default function Cookbook() {
-  const { user } = useAuth();
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+//   if (user.cookbook_count === 0) {
+//     return <div>You have no cookbooks yet. Start by creating one!</div>;
+//   }
 
-  const { data, loading, error } = useGraphQLQuery<CookbookData, undefined>(
-    GET_PERSONAL_COOKBOOK,
-    undefined,
-    "GetPersonalCookbook",
-  );
+//   if (user.cookbook_count === 1) {
+//     const cookbookId = user.primary_cookbook_id;
+//     if (cookbookId) {
+//       redirect(`/my/cookbooks/${cookbookId}`);
+//     }
 
-  useEffect(() => {
-    if (data?.personalCookbook) setRecipes(data.personalCookbook);
-  }, [data]);
+//     const cookbooks = await getUserCookbooks();
+//     redirect(`/my/cookbooks/${cookbooks[0].id}`);
+//   }
 
-  return (
-    <main className="p-6">
-      <section>
-        {user && (
-          <h2 className="text-2xl font-semibold mb-4">
-            {user.first_name}&apos;s Cookbook
-          </h2>
-        )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <>
-            {loading && <p>Loading recipes...</p>}
-            {error && (
-              <p className="text-red-500">
-                Error: {error.message || "Something went wrong."}
-              </p>
-            )}
-            {!loading &&
-              !error &&
-              recipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-          </>
-        </div>
-      </section>
-    </main>
-  );
-}
+//   const cookbooks = await getUserCookbooks();
+
+//   return (
+//     <div>
+//       <h1>My Cookbooks</h1>
+//       <ul>
+//         {cookbooks.map((cb) => (
+//           <li key={cb.id}>
+//             <Link href={`/my/cookbooks/${cb.id}`}>{cb.title}</Link>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }

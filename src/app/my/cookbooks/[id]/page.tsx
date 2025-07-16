@@ -1,3 +1,5 @@
+import CookbookLayout from "@/components/CookbookLayout";
+
 export default function PersonalCookbook() {
-  return <div>Coming soon...</div>;
+  return <CookbookLayout />;
 }

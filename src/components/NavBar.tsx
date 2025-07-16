@@ -10,7 +10,7 @@ export default function NavBar() {
     <div className="flex gap-4">
       {isLoggedIn ? (
         <nav className="flex gap-4">
-          <a href="[id]/cookbooks">My Cookbook</a>
+          <a href="my/cookbooks">My Cookbook</a>
           <a href="/recipes">Recipes</a>
           <a href="/cookbooks">Cookbooks</a>
           <a href="/about">About</a>
