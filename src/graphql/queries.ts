@@ -54,3 +54,48 @@ export const GET_ALL_RECIPES = `
     }
   }
 `;
+
+export const GET_PUBLIC_COOKBOOKS = `
+  query GetPublicCookbooks {
+    publicCookbooks {
+      id
+      cookbookName
+      public
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_USER_COOKBOOKS = `
+  query GetUserCookbooks {
+    userCookbooks {
+      id
+      cookbookName
+      public
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_COOKBOOK = `
+  query GetCookbook($id: ID!) { 
+    cookbookRecipes (id: $id) {
+      id
+      cookbookName
+      public
+      canEdit
+      user {
+        id
+      }
+      recipes {
+        id
+        name
+        image
+      }
+    }
+  }
+`;
