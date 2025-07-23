@@ -14,8 +14,6 @@ export type SiteUser = {
 export type AuthContextType = {
   isLoggedIn: boolean;
   user: SiteUser | null;
-  token: string | null;
   logIn: (credentials: LoginCredentials) => Promise<void>;
   logOut: () => void;
-  registerUser: (userData: SiteUser, token: string) => void;
 };

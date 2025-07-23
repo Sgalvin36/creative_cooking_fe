@@ -7,64 +7,52 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import {
-  SiteUser,
-  AuthContextType,
-  LoginCredentials,
-  LoginResponse,
-} from "../types";
-import { loginUser } from "../lib/api";
+import { SiteUser, AuthContextType, LoginCredentials } from "../types";
+import { loginUser, fetchCurrentUser, logoutUser } from "../lib/api";
 import { useRouter } from "next/navigation";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<SiteUser | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
-    const storedUser = localStorage.getItem("authUser");
-
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
+    async function loadUser() {
+      try {
+        const userData = await fetchCurrentUser();
+        if (userData) {
+          setUser(userData);
+          setIsLoggedIn(true);
+        }
+      } catch {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
     }
+    loadUser();
   }, []);
 
-  const handleAuthSuccess = (userData: SiteUser, newToken: string) => {
-    setToken(newToken);
-    setUser(userData);
-    setIsLoggedIn(true);
-    localStorage.setItem("authToken", newToken);
-    localStorage.setItem("authUser", JSON.stringify(userData));
-  };
-
   const logIn = async (credentials: LoginCredentials) => {
-    const response: LoginResponse = await loginUser(credentials);
-    handleAuthSuccess(response.user, response.token);
+    await loginUser(credentials);
+
+    const userData = await fetchCurrentUser();
+    if (userData) {
+      setUser(userData);
+      setIsLoggedIn(true);
+    }
   };
 
-  const registerUser = (userData: SiteUser, token: string) => {
-    handleAuthSuccess(userData, token);
-  };
-
-  const logOut = () => {
-    setToken(null);
+  const logOut = async () => {
+    await logoutUser();
     setUser(null);
     setIsLoggedIn(false);
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("authUser");
     router.push("/");
   };
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn, user, token, logIn, logOut, registerUser }}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, user, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
   );
