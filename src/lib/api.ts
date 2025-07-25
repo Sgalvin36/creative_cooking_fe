@@ -41,7 +41,7 @@ export async function fetchCurrentUser(): Promise<SiteUser | null> {
 
 export async function logoutUser(): Promise<void> {
   const res = await fetch(`${baseUrl}/api/v1/logout`, {
-    method: "POST",
+    method: "DELETE",
     credentials: "include",
   });
 
