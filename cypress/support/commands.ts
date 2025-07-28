@@ -35,3 +35,42 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add(
+  "graphql",
+  (query, variables = {}, operationName = null) => {
+    return cy.request({
+      method: "POST",
+      url: `${Cypress.env("apiUrl")}/graphql`,
+      body: {
+        query,
+        variables,
+        operationName,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+  }
+);
+
+Cypress.Commands.add("login", (email: string, password: string) => {
+  return cy.request({
+    method: "POST",
+    url: `${Cypress.env("apiUrl")}/api/v1/login`,
+    body: { email, password },
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true, // Important: includes and sets the session cookie
+  });
+});
+
+Cypress.Commands.add("logout", () => {
+  return cy.request({
+    method: "DELETE",
+    url: `${Cypress.env("apiUrl")}/api/v1/logout`,
+    withCredentials: true,
+  });
+});
