@@ -151,4 +151,65 @@ describe("GraphQL API", () => {
       );
     });
   });
+
+  it("returns canEdit: true for user's own cookbook", () => {
+    cy.login(email, password).then((user) => {
+      const currentUserId = String(user.id);
+
+      cy.graphql(queries.GET_USER_COOKBOOKS, {}, "GetUserCookbooks").then(
+        (response) => {
+          const ownedCookbook = response.body.data.userCookbooks[0];
+          const cookbookId = ownedCookbook.id;
+
+          cy.graphql(
+            queries.GET_COOKBOOK_RECIPES,
+            { id: cookbookId },
+            "GetCookbookRecipes"
+          ).then((recipeResponse) => {
+            const cookbook = recipeResponse.body.data.cookbookRecipes;
+
+            expect(cookbook.user.id).to.eq(currentUserId);
+            expect(cookbook.canEdit).to.be.true;
+
+            expect(cookbook.recipes).to.be.an("array");
+            if (cookbook.recipes.length > 0) {
+              cookbook.recipes.forEach((recipe: any) => {
+                validators.validateRecipe(recipe);
+              });
+            }
+          });
+        }
+      );
+    });
+  });
+
+  it("returns canEdit: false for cookbooks the user does not own", () => {
+    cy.login(email, password).then((user) => {
+      const currentUserId = String(user.id);
+
+      cy.graphql(queries.GET_PUBLIC_COOKBOOKS, {}, "GetPublicCookbooks").then(
+        (response) => {
+          const foreignCookbook = response.body.data.publicCookbooks.find(
+            (cb: any) => cb.user.id !== currentUserId
+          );
+
+          expect(foreignCookbook, "Expected a cookbook not owned by user").to
+            .exist;
+
+          cy.graphql(
+            queries.GET_COOKBOOK_RECIPES,
+            { id: foreignCookbook.id },
+            "GetCookbookRecipes"
+          ).then((recipeResponse) => {
+            const cookbook = recipeResponse.body.data.cookbookRecipes;
+
+            expect(cookbook.user.id).to.not.eq(currentUserId);
+            expect(cookbook.canEdit).to.be.false;
+
+            expect(cookbook.recipes).to.be.an("array");
+          });
+        }
+      );
+    });
+  });
 });
