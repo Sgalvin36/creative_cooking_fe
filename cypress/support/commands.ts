@@ -63,15 +63,22 @@ Cypress.Commands.add("getFirstRandomRecipeId", () => {
 });
 
 Cypress.Commands.add("login", (email: string, password: string) => {
-  return cy.request({
-    method: "POST",
-    url: `${Cypress.env("apiUrl")}/api/v1/login`,
-    body: { email, password },
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: true, // Important: includes and sets the session cookie
-  });
+  return cy
+    .request({
+      method: "POST",
+      url: `${Cypress.env("apiUrl")}/api/v1/login`,
+      body: { email, password },
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true, // Important: includes and sets the session cookie
+    })
+    .then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property("user");
+      expect(response.body.user).to.have.property("id");
+      return response.body.user;
+    });
 });
 
 Cypress.Commands.add("logout", () => {

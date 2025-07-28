@@ -41,3 +41,10 @@ export function validateRecipeDetails(recipe: any) {
     expect(entry.ingredient).to.have.property("name").that.is.a("string");
   });
 }
+
+export function validateCookbook(cookbook: any) {
+  expect(cookbook).to.have.all.keys("id", "cookbookName", "public", "user");
+  expect(cookbook.id).to.be.a("string");
+  expect(cookbook.cookbookName).to.be.a("string");
+  expect(cookbook.user).to.have.property("id").that.is.a("string");
+}
