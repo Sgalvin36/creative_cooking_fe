@@ -7,5 +7,6 @@ declare namespace Cypress {
       variables?: Record<string, unknown>,
       operationName?: string | null
     ): Chainable<Response>;
+    getFirstRandomRecipeId(): Chainable<Response>;
   }
 }

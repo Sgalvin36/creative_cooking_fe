@@ -1,14 +1,3 @@
-export const GET_PERSONAL_COOKBOOK = `
-query GetPersonalCookbook {
-  personalCookbook {
-    id
-    name
-    image
-    servingSize
-  }
-}
-`;
-
 export const GET_RECIPE = `
   query GetRecipe($id: ID!) {
     oneRecipe(id: $id) {
@@ -81,8 +70,8 @@ export const GET_USER_COOKBOOKS = `
   }
 `;
 
-export const GET_COOKBOOK = `
-  query GetCookbook($id: ID!) { 
+export const GET_COOKBOOK_RECIPES = `
+  query GetCookbookRecipes($id: ID!) { 
     cookbookRecipes (id: $id) {
       id
       cookbookName

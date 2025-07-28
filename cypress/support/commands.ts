@@ -1,3 +1,4 @@
+import * as queries from "../../src/graphql/queries";
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -41,7 +42,7 @@ Cypress.Commands.add(
   (query, variables = {}, operationName = null) => {
     return cy.request({
       method: "POST",
-      url: `${Cypress.env("apiUrl")}/graphql`,
+      url: `${Cypress.env("apiUrl")}/api/v1/graphql`,
       body: {
         query,
         variables,
@@ -54,6 +55,12 @@ Cypress.Commands.add(
     });
   }
 );
+
+Cypress.Commands.add("getFirstRandomRecipeId", () => {
+  return cy
+    .graphql(queries.GET_RANDOM_RECIPES, { count: 1 }, "GetRandomRecipes")
+    .then((res) => res.body.data.randomRecipes[0].id);
+});
 
 Cypress.Commands.add("login", (email: string, password: string) => {
   return cy.request({

@@ -1,5 +1,6 @@
-import * as mutations from "@/graphql/mutations";
-// import * as queries from "@/graphql/queries";
+import * as mutations from "../../src/graphql/mutations";
+import * as queries from "../../src/graphql/queries";
+import { validateRecipe, validateRecipeDetails } from "../support/validators";
 
 describe("GraphQL API", () => {
   // const email = "SRoger@example.com";
@@ -30,6 +31,65 @@ describe("GraphQL API", () => {
         randomLastName
       );
       expect(response.body.data.registerUser.user.email).to.eq(randomEmail);
+    });
+  });
+
+  it("gets default random recipes", () => {
+    cy.graphql(queries.GET_RANDOM_RECIPES, {}, "GetRandomRecipes").then(
+      (response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data).to.have.property("randomRecipes");
+        expect(response.body.data.randomRecipes).to.be.an("array");
+        expect(response.body.data.randomRecipes.length).to.be.at.most(5);
+
+        response.body.data.randomRecipes.forEach((recipe: any) => {
+          validateRecipe(recipe);
+        });
+      }
+    );
+  });
+
+  it("gets set number of random recipes", () => {
+    const count = 9;
+
+    cy.graphql(queries.GET_RANDOM_RECIPES, { count }, "GetRandomRecipes").then(
+      (response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data).to.have.property("randomRecipes");
+        expect(response.body.data.randomRecipes).to.be.an("array");
+        expect(response.body.data.randomRecipes).to.have.lengthOf(9);
+
+        response.body.data.randomRecipes.forEach((recipe: any) => {
+          validateRecipe(recipe);
+        });
+      }
+    );
+  });
+
+  it("return default number of random recipes if count is < 0", () => {
+    const count = -10;
+
+    cy.graphql(queries.GET_RANDOM_RECIPES, { count }, "GetRandomRecipes").then(
+      (response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body.data).to.have.property("randomRecipes");
+        expect(response.body.data.randomRecipes).to.be.an("array");
+        expect(response.body.data.randomRecipes).to.have.lengthOf(5);
+
+        response.body.data.randomRecipes.forEach((recipe: any) => {
+          validateRecipe(recipe);
+        });
+      }
+    );
+  });
+
+  it("fetches a detailed recipe by ID", () => {
+    cy.getFirstRandomRecipeId().then((id) => {
+      cy.graphql(queries.GET_RECIPE, { id }, "GetRecipe").then((response) => {
+        expect(response.body.data.oneRecipe.id).to.eq(id);
+        const recipe = response.body.data.oneRecipe;
+        validateRecipeDetails(recipe);
+      });
     });
   });
 });
