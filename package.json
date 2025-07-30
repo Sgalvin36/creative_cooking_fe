@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "fix-lint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --fix",
     "cypress:open": "cypress open",
+    "type-check": "tsc --noEmit",
     "prepare": "husky install"
   },
   "dependencies": {

@@ -51,7 +51,6 @@ Cypress.Commands.add(
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true,
     });
   }
 );
@@ -71,7 +70,6 @@ Cypress.Commands.add("login", (email: string, password: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true, // Important: includes and sets the session cookie
     })
     .then((response) => {
       expect(response.status).to.eq(200);
@@ -85,6 +83,5 @@ Cypress.Commands.add("logout", () => {
   return cy.request({
     method: "DELETE",
     url: `${Cypress.env("apiUrl")}/api/v1/logout`,
-    withCredentials: true,
   });
 });
