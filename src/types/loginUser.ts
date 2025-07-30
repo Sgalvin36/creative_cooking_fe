@@ -32,7 +32,6 @@ export interface graphQLUser {
 export interface RegistrationResponse {
   registerUser: {
     user: graphQLUser;
-    token: string;
     errors: string[];
   };
 }

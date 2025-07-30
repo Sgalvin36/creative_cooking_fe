@@ -8,7 +8,6 @@ import {
   RegisterFormData,
   RegistrationResponse,
   ModalProps,
-  graphQLUser,
 } from "@/types";
 
 export default function RegistrationModal({ isOpen, onClose }: ModalProps) {
@@ -22,12 +21,12 @@ export default function RegistrationModal({ isOpen, onClose }: ModalProps) {
 
   const [formError, setFormError] = useState("");
 
-  const { mutate, data, loading, error } = useGraphQLMutation<
+  const { mutate, loading, error } = useGraphQLMutation<
     RegistrationResponse,
     RegisterUserVariables
   >(REGISTER_USER, "RegisterUser");
 
-  const { registerUser } = useAuth();
+  const { loadUser } = useAuth();
 
   useEffect(() => {
     if (!isOpen) {
@@ -63,25 +62,13 @@ export default function RegistrationModal({ isOpen, onClose }: ModalProps) {
     }
 
     try {
-      await mutate(submitData);
-      console.log("Data", data);
-      console.log("Error", error);
+      const result = await mutate(submitData);
+      console.log("Data", result);
 
-      const userResponse = data?.registerUser;
+      const userResponse = result?.registerUser;
 
-      if (userResponse?.user && userResponse.token) {
-        const graphqlUser: graphQLUser = userResponse.user;
-
-        const normalizedUser = {
-          id: graphqlUser.id,
-          first_name: graphqlUser.firstName,
-          last_name: graphqlUser.lastName,
-          email: graphqlUser.email,
-          slug: graphqlUser.slug,
-        };
-
-        await registerUser(normalizedUser, userResponse.token);
-
+      if (userResponse?.user) {
+        await loadUser();
         setFormError("");
         onClose();
       } else if (userResponse?.errors && userResponse.errors.length > 0) {

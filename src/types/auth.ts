@@ -16,4 +16,5 @@ export type AuthContextType = {
   user: SiteUser | null;
   logIn: (credentials: LoginCredentials) => Promise<void>;
   logOut: () => void;
+  loadUser: () => Promise<void>;
 };

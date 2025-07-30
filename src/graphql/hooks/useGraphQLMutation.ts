@@ -5,7 +5,7 @@ export function useGraphQLMutation<TData, TVariables>(
   query: string,
   operationName?: string,
 ): {
-  mutate: (variables: TVariables) => Promise<void>;
+  mutate: (variables: TVariables) => Promise<TData | undefined>;
   data: TData | null;
   loading: boolean;
   error: Error | null;
@@ -24,6 +24,7 @@ export function useGraphQLMutation<TData, TVariables>(
         operationName,
       );
       setData(result);
+      return result;
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err);

@@ -18,19 +18,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    async function loadUser() {
-      try {
-        const userData = await fetchCurrentUser();
-        if (userData) {
-          setUser(userData);
-          setIsLoggedIn(true);
-        }
-      } catch {
+  const loadUser = async () => {
+    try {
+      const userData = await fetchCurrentUser();
+      if (userData) {
+        setUser(userData);
+        setIsLoggedIn(true);
+      } else {
         setUser(null);
         setIsLoggedIn(false);
       }
+    } catch {
+      setUser(null);
+      setIsLoggedIn(false);
     }
+  };
+
+  useEffect(() => {
     loadUser();
   }, []);
 
@@ -52,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, logIn, logOut }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, logIn, logOut, loadUser }}>
       {children}
     </AuthContext.Provider>
   );
