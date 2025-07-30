@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Recipe, RandomRecipesData } from "@/types";
-import RecipeCard from "@/components/RecipeCard";
+import RecipeCard from "@/components/cards/RecipeCard";
 import { useGraphQLQuery } from "@/graphql/hooks/useGraphQLQuery";
 import { GET_RANDOM_RECIPES } from "@/graphql/queries";
 
