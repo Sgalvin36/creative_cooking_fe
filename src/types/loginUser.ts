@@ -7,7 +7,6 @@ export interface LoginCredentials {
 }
 
 export interface LoginResponse {
-  token: string;
   user: SiteUser;
 }
 
@@ -33,7 +32,6 @@ export interface graphQLUser {
 export interface RegistrationResponse {
   registerUser: {
     user: graphQLUser;
-    token: string;
     errors: string[];
   };
 }

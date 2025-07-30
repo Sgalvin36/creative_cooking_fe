@@ -1,3 +1,4 @@
+import * as queries from "../../src/graphql/queries";
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -35,3 +36,52 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add(
+  "graphql",
+  (query, variables = {}, operationName = null) => {
+    return cy.request({
+      method: "POST",
+      url: `${Cypress.env("apiUrl")}/api/v1/graphql`,
+      body: {
+        query,
+        variables,
+        operationName,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+);
+
+Cypress.Commands.add("getFirstRandomRecipeId", () => {
+  return cy
+    .graphql(queries.GET_RANDOM_RECIPES, { count: 1 }, "GetRandomRecipes")
+    .then((res) => res.body.data.randomRecipes[0].id);
+});
+
+Cypress.Commands.add("login", (email: string, password: string) => {
+  return cy
+    .request({
+      method: "POST",
+      url: `${Cypress.env("apiUrl")}/api/v1/login`,
+      body: { email, password },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property("user");
+      expect(response.body.user).to.have.property("id");
+      return response.body.user;
+    });
+});
+
+Cypress.Commands.add("logout", () => {
+  return cy.request({
+    method: "DELETE",
+    url: `${Cypress.env("apiUrl")}/api/v1/logout`,
+  });
+});

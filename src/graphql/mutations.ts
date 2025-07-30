@@ -8,7 +8,6 @@ export const REGISTER_USER = `
         password: $password
       }
     ) {
-      token
       user {
         id
         firstName

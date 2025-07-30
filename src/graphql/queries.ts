@@ -1,14 +1,3 @@
-export const GET_PERSONAL_COOKBOOK = `
-query GetPersonalCookbook {
-  personalCookbook {
-    id
-    name
-    image
-    servingSize
-  }
-}
-`;
-
 export const GET_RECIPE = `
   query GetRecipe($id: ID!) {
     oneRecipe(id: $id) {
@@ -51,6 +40,51 @@ export const GET_ALL_RECIPES = `
       name
       image
       servingSize
+    }
+  }
+`;
+
+export const GET_PUBLIC_COOKBOOKS = `
+  query GetPublicCookbooks {
+    publicCookbooks {
+      id
+      cookbookName
+      public
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_USER_COOKBOOKS = `
+  query GetUserCookbooks {
+    userCookbooks {
+      id
+      cookbookName
+      public
+      user {
+        id
+      }
+    }
+  }
+`;
+
+export const GET_COOKBOOK_RECIPES = `
+  query GetCookbookRecipes($id: ID!) { 
+    cookbookRecipes (id: $id) {
+      id
+      cookbookName
+      public
+      canEdit
+      user {
+        id
+      }
+      recipes {
+        id
+        name
+        image
+      }
     }
   }
 `;
