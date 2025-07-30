@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { fetchGraphQL, fetchCurrentUser } from "@/lib/api";
+import { fetchGraphQL } from "@/lib/api";
+import { getCurrentUser } from "@/lib/server/getCurrentUser";
 import { GET_USER_COOKBOOKS } from "@/graphql/queries";
 import { GetUserCookbooksResponse } from "@/types";
 
 export default async function MyCookbooksPage() {
-  const user = await fetchCurrentUser();
+  const user = await getCurrentUser();
 
   if (user?.cookbook_count === 0) {
     return <div>You have no cookbooks yet. Start by creating one!</div>;

@@ -1,4 +1,4 @@
-import { getRecipe } from "@/lib/queries/getRecipe";
+import { getRecipe } from "@/lib/server/getRecipe";
 import RecipeActionBar from "./RecipeActionBar";
 
 type rParams = Promise<{ id: string }>;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../context/AuthContext";
-import { useGraphQLMutation } from "@/graphql/hooks/useGraphQLMutation";
+import { useGraphQLMutation } from "@/hooks/useGraphQLMutation";
 import { REGISTER_USER } from "@/graphql/mutations";
 import {
   RegisterUserVariables,
