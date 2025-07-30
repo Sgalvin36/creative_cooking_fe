@@ -32,7 +32,6 @@ describe("Authentication API", () => {
         cy.request({
           method: "GET",
           url: `${Cypress.env("apiUrl")}/api/v1/me`,
-          withCredentials: true,
           failOnStatusCode: false,
         }).then((meResponse) => {
           expect(meResponse.status).to.be.oneOf([401, 403]);
