@@ -15,7 +15,6 @@ describe("Authentication API", () => {
       cy.request({
         method: "GET",
         url: `${Cypress.env("apiUrl")}/api/v1/me`,
-        withCredentials: true,
       }).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.have.property("user");
