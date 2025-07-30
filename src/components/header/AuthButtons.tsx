@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "./ui/Button";
-import { useAuth } from "../context/AuthContext";
+import { Button } from "../ui/Button";
+import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
-import RegistrationModal from "./modals/RegistrationModal";
-import LoginModal from "./modals/LoginModal";
+import RegistrationModal from "../modals/RegistrationModal";
+import LoginModal from "../modals/LoginModal";
 
 type ModalSwitch = "login" | "register" | null;
 

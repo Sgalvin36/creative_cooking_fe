@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Recipe } from "../types";
-import { useAuth } from "../context/AuthContext";
+import { Recipe } from "@/types";
+import { useAuth } from "@/context/AuthContext";
 import { Plus, X } from "react-feather";
 
 type Props = {

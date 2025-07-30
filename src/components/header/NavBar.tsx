@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { User } from "react-feather";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function NavBar() {
   const { isLoggedIn } = useAuth();
