@@ -1,3 +1,5 @@
-export default function RandomCookbook() {
-  return <div>Coming soon...</div>;
+import CookbookLayout from "@/components/CookbookLayout";
+
+export default function PublicCookbook() {
+  return <CookbookLayout />;
 }

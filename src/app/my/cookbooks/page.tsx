@@ -19,9 +19,7 @@ export default async function MyCookbooksPage() {
     }
   }
 
-  const { data } = await fetchGraphQL<{ data: GetUserCookbooksResponse }>(
-    GET_USER_COOKBOOKS,
-  );
+  const data = await fetchGraphQL<GetUserCookbooksResponse>(GET_USER_COOKBOOKS);
 
   const cookbooks = data?.userCookbooks ?? [];
 
