@@ -20,7 +20,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (isLoggedIn && user) {
-      router.push(`/${user.id}/cookbook`);
+      router.push(`/my/cookbooks`);
     }
   }, [isLoggedIn, user]);
 
