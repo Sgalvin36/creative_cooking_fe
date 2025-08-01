@@ -69,11 +69,12 @@ export async function fetchGraphQL<TData, TVariables = Record<string, unknown>>(
     });
 
     const result = await res.json();
+    // console.log("Raw GRAPHQL response: ", result);
 
     if (result.errors) {
       throw new Error(result.errors[0].message);
     }
-
+    // console.log("result.data response: ", result.data);
     return result.data as TData;
   } catch (error: unknown) {
     if (error instanceof Error) {
